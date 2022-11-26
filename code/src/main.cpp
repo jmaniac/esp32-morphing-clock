@@ -78,15 +78,15 @@ void setup(){
   wifiClient.setPrivateKey(client_key_str);   
   #endif
 
-  client.setServer( MQTT_SERVER, MQTT_PORT );
-  client.setCallback(mqtt_callback);
-  reconnect();
-  lastStatusSend = 0;
-  logStatusMessage("MQTT done!");
+  // client.setServer( MQTT_SERVER, MQTT_PORT );
+  // client.setCallback(mqtt_callback);
+  // reconnect();
+  // lastStatusSend = 0;
+  // logStatusMessage("MQTT done!");
 
-  logStatusMessage("Initialize TSL...");
-  tslConfigureSensor();
-  logStatusMessage("TSL done!");
+  // logStatusMessage("Initialize TSL...");
+  // tslConfigureSensor();
+  // logStatusMessage("TSL done!");
 
   logStatusMessage("Setting up watchdog...");
   esp_task_wdt_init(WDT_TIMEOUT, true);
@@ -109,11 +109,11 @@ void loop() {
     WiFi.reconnect();
   }
 
-  if ( !client.connected() ) {
-    logStatusMessage("MQTT lost");
-    reconnect();
-  }
-  client.loop();
+  // if ( !client.connected() ) {
+  //   logStatusMessage("MQTT lost");
+  //   reconnect();
+  // }
+  // client.loop();
 
   // Periodically refresh NTP time
   if (millis() - lastNTPUpdate > 1000*NTP_REFRESH_INTERVAL_SEC) {
@@ -145,23 +145,23 @@ void loop() {
   // Do we have new sensor data?
   if (newSensorData) {
     //logStatusMessage("Sensor data in");
-    displaySensorData();
+    //displaySensorData();
     displayTodaysWeather();
   }
 
   // Is the sensor data too old?
   if (millis() - lastSensorRead > 1000*SENSOR_DEAD_INTERVAL_SEC) {
     sensorDead = true;
-    displaySensorData();
+    //displaySensorData();
     displayTodaysWeather();
   }
 
-  heartBeat = !heartBeat;
-  drawHeartBeat();
-  if (millis() - lastLightRead > 1000*LIGHT_READ_INTERVAL_SEC) {
-    lightUpdate();
-    //displayTodaysWeather();
-  } 
+  // heartBeat = !heartBeat;
+  // drawHeartBeat();
+  // if (millis() - lastLightRead > 1000*LIGHT_READ_INTERVAL_SEC) {
+  //   lightUpdate();
+  //   //displayTodaysWeather();
+  // } 
 
   //Reset the watchdog timer as long as the main task is running
   esp_task_wdt_reset();

@@ -143,7 +143,7 @@ void drawTestBitmap() {
   drawBitmap(BITMAP_X+27, BITMAP_Y, 8, 8, showers_8x8);
   drawBitmap(BITMAP_X+36, BITMAP_Y, 8, 8, snow_8x8);
   drawBitmap(BITMAP_X+45, BITMAP_Y, 8, 8, storm_8x8);*/
-  drawBitmap(BITMAP_X+58, BITMAP_Y, 12, 20, minion);
+  //drawBitmap(BITMAP_X+58, BITMAP_Y, 12, 20, minion);
 }
 
 // Draw one of the available weather icons in the specified space
@@ -172,7 +172,7 @@ void drawWeatherIcon(int startx, int starty, int width, int height, uint8_t icon
 }
 
 void displayTodaysWeather() {
-  drawWeatherIcon(WEATHER_TODAY_X, WEATHER_TODAY_Y, 8, 8, forecast5Days[0], true);
+  drawWeatherIcon(WEATHER_TODAY_X, WEATHER_TODAY_Y, 8, 8, forecast5Days[0], false);
 }
 
 void displayTodaysTempRange() {
@@ -215,6 +215,7 @@ void drawBitmap(int startx, int starty, int width, int height, uint32_t *bitmap)
 void drawBitmap(int startx, int starty, int width, int height, uint32_t *bitmap, bool enlarged) {
   int counter = 0;
   if (enlarged) {
+    Serial.println("rendering enlarged bitmap");
     for (int yy = 0; yy < height; yy++) {
       for (int xx = 0; xx < width; xx++) {
         dma_display->drawPixel(startx+2*xx, starty+2*yy, color565(bitmap[counter]));
